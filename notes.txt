@@ -1,0 +1,31 @@
+“The formula for output neuron:
+Output = ((I-K+2P)/S + 1), where
+I - a size of input neuron,
+K - kernel size,
+P - padding,
+S - stride.”
+and
+
+“𝑊′=(𝑊−𝐹+2𝑃/𝑆)+1”
+
+Org Image = 28x28
+first output is 10
+second output is 20
+maxpooling 2x2
+kernel 5
+
+(28x28x1) -> conv1 -> (28-5+1) -> (24x24x10)
+(24x24x10) ->max1 -> (24/2) -> (12x12x10)
+(12x12x10) ->conv2 -> (12-5+1) -> (8x8x20)
+(8x8x20) -> max2 -> (8/2) -> (4 x 4 x 20)
+(4x4x20) = 320 -> Linear -> 50
+50 -> Linear -> output_dim
+
+
+self.conv.add_module("conv_1", torch.nn.Conv2d(1, 10, kernel_size=5))
+self.conv.add_module("maxpool_1", torch.nn.MaxPool2d(kernel_size=2))
+self.conv.add_module("relu_1", torch.nn.ReLU())
+self.conv.add_module("conv_2", torch.nn.Conv2d(10, 20, kernel_size=5))
+self.conv.add_module("dropout_2", torch.nn.Dropout())
+self.conv.add_module("maxpool_2", torch.nn.MaxPool2d(kernel_size=2))
+self.conv.add_module("relu_2", torch.nn.ReLU())
